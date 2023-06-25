@@ -58,13 +58,6 @@ DFSStack.prototype.push = function (node) {
 };
 
 DFSStack.prototype.pushWith = function (node, item) {
-  var seenSizeBefore = this.seen.size;
-
-  this.seen.add(node);
-
-  // If node was already seen
-  if (seenSizeBefore === this.seen.size) return false;
-
   this.stack[this.size++] = item;
 
   return true;

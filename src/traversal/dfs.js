@@ -38,8 +38,8 @@ function abstractDfs(graph, startingNode, callback, options) {
 
   var stack = new DFSStack(graph);
 
-  var forEachNeighbor =
-    graph['forEach' + capitalize(options.mode || 'outbound') + 'Neighbor'].bind(
+  var neighborEnteries =
+    graph[(options.mode || 'outbound') + 'NeighborEntries'].bind(
       graph
     );
 
@@ -68,12 +68,20 @@ function abstractDfs(graph, startingNode, callback, options) {
 
     while (stack.size !== 0) {
       record = stack.pop();
+      if (stack.has(record.node)) continue
 
       stop = callback(record.node, record.attributes, record.depth);
 
       if (stop === true) continue;
 
-      forEachNeighbor(record.node, visit);
+      var neighbors = neighborEnteries(record.node)
+      if (options.traversalOrder) {
+        neighbors = options.traversalOrder(record.node, record.attributes, neighbors)
+      } 
+      
+      for (var neighbor of neighbors) {
+        visit(...Object.values(neighbor))
+      }
     }
   });
 }

@@ -4,11 +4,11 @@ import {TraversalCallback, TraversalOptions} from './types';
 export function dfs<N extends Attributes = Attributes>(
   graph: Graph<N>,
   callback: TraversalCallback<N>,
-  options?: TraversalOptions
+  options?: TraversalOptions<N>
 ): void;
 export function dfsFromNode<N extends Attributes = Attributes>(
   graph: Graph<N>,
   node: unknown,
   callback: TraversalCallback<N>,
-  options?: TraversalOptions
+  options?: TraversalOptions<N>
 ): void;
